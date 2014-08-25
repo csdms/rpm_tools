@@ -1,0 +1,7 @@
+# Minimum build dependencies for RHEL-compatible distributions
+gcc
+gcc-c++
+subversion
+rpm-build
+rpmdevtools
+rpmlint
