@@ -28,7 +28,7 @@ skeletons can be generated to facilitate language interoperability.
 %setup -q
 
 %build
-%configure --disable-documentation
+%configure --enable-java=/usr/lib/jvm/java-1.7.0-openjdk.x86_64 --disable-documentation
 make %{?_smp_mflags}
 
 %install
