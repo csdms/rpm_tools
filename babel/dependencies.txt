@@ -1,0 +1,4 @@
+# Packages required to build babel
+compat-gcc-34-g77
+gcc-gfortran
+gcc-java
