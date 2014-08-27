@@ -1,3 +1,5 @@
+%global _lib32dir /usr/lib
+
 Name:		babel
 Version:	1.4.0
 Release:	1%{?dist}
@@ -5,8 +7,6 @@ Summary:	Babel is a high-performance language interoperability tool
 Group:		Applications/Engineering
 License:	LGPLv2+
 URL:		http://computation.llnl.gov/casc/components
-# The HydroTrend source can be checked out from the CSDMS Trac site:
-# $ svn co https://csdms.colorado.edu/svn/hydrotrend/trunk
 Source0:	http://computation.llnl.gov/casc/components/docs/%{name}-%{version}.tar.gz
 BuildRoot:	%{_topdir}/BUILDROOT/%{name}-%{version}-%{release}
 
@@ -28,7 +28,9 @@ skeletons can be generated to facilitate language interoperability.
 %setup -q
 
 %build
-%configure --enable-java=/usr/lib/jvm/java-1.7.0-openjdk.x86_64 --disable-documentation
+%configure \
+	--enable-java=/usr/lib/jvm/java-1.7.0-openjdk.x86_64 \
+	--disable-documentation
 make %{?_smp_mflags}
 
 %install
@@ -41,11 +43,23 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 %doc ANNOUNCE BUGS CHANGES COPYRIGHT INSTALL LICENSE README THANKS
-#%{_bindir}/%{name}
-#%{_includedir}/%{name}_cli.h
-#%{_includedir}/bmi_%{name}.h
-#%{_libdir}/lib%{name}.so
-#%{_libdir}/pkgconfig/%{name}.pc
+%{_bindir}/%{name}
+%{_bindir}/%{name}-*
+%{_includedir}/%{name}_config.h
+%{_includedir}/c
+%{_includedir}/cxx/
+%{_includedir}/java/
+%{_includedir}/libparsifal/
+%{_includedir}/python2.7/
+%{_includedir}/sidl*
+%{_datadir}/%{name}-%{version}/
+%{_datadir}/%{name}-runtime-%{version}/patches/*.txt
+%{_datadir}/sgml/%{name}-%{version}/config/*
+%{_datadir}/aclocal/*.m4
+%{_datadir}/*.sidl
+%{_libdir}/libparsifal*
+%{_libdir}/libsidl*
+%{_lib32dir}/
 
 %changelog
 * Mon Aug 25 2014 Mark Piper <mark.piper@colorado.edu>
