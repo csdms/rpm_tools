@@ -1,19 +1,20 @@
 %global _lib32dir /usr/lib
-
+%define url http://computation.llnl.gov/casc/components
+ 
 Name:		babel
 Version:	1.4.0
 Release:	1%{?dist}
 Summary:	Babel is a high-performance language interoperability tool
 Group:		Applications/Engineering
 License:	LGPLv2+
-URL:		http://computation.llnl.gov/casc/components
-Source0:	http://computation.llnl.gov/casc/components/docs/%{name}-%{version}.tar.gz
+URL:		%{url}
+Source0:	%{url}/docs/%{name}-%{version}.tar.gz
 BuildRoot:	%{_topdir}/BUILDROOT/%{name}-%{version}-%{release}
+Prefix:         /usr
 
-#%if 0%{?_buildrequires:1}
-#BuildRequires:	%{_buildrequires}
-#%endif
-#Requires:
+%if 0%{?_buildrequires:1}
+BuildRequires:	%{_buildrequires}
+%endif
 
 %description
 Babel is a tool that enables software written in different languages
@@ -36,6 +37,9 @@ make %{?_smp_mflags}
 %install
 rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
+
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %clean
 rm -rf $RPM_BUILD_ROOT
