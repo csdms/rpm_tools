@@ -28,21 +28,25 @@ skeletons can be generated to facilitate language interoperability.
 %prep
 %setup -q
 
+# Where is Java? I used JAVAPREFIX=/usr/lib/jvm/java-1.7.0-openjdk.x86_64
 %build
 %configure \
-	--enable-java=/usr/lib/jvm/java-1.7.0-openjdk.x86_64 \
+	--enable-java=$JAVAPREFIX \
 	--disable-documentation
 make %{?_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
-make install DESTDIR=$RPM_BUILD_ROOT
+rm -rf %{buildroot}
+make install DESTDIR=%{buildroot}
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
+%check
+#make check
+
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
@@ -52,6 +56,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/%{name}_config.h
 %{_includedir}/c
 %{_includedir}/cxx/
+%{_includedir}/f77/
+%{_includedir}/f90/
 %{_includedir}/java/
 %{_includedir}/libparsifal/
 %{_includedir}/python2.7/
@@ -61,6 +67,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/sgml/%{name}-%{version}/config/*
 %{_datadir}/aclocal/*.m4
 %{_datadir}/*.sidl
+%{_libdir}/libchasmlite*
 %{_libdir}/libparsifal*
 %{_libdir}/libsidl*
 %{_lib32dir}/
