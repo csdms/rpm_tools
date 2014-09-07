@@ -1,0 +1,9 @@
+# Build dependencies for Debian-compatible distributions (mainly for Travis CI)
+rpm
+cmake
+pkg-config
+libglib2.0*
+gcc
+g++
+subversion
+libxml2
