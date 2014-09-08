@@ -1,4 +1,4 @@
-%global _lib32dir /usr/lib
+%define _lib32dir /usr/lib
 %define url http://computation.llnl.gov/casc/components
  
 Name:		babel
@@ -31,7 +31,6 @@ skeletons can be generated to facilitate language interoperability.
 # Where is Java? I used JAVAPREFIX=/usr/lib/jvm/java-1.7.0-openjdk.x86_64
 %build
 %configure \
-	--enable-java=$JAVAPREFIX \
 	--disable-documentation
 make %{?_smp_mflags}
 
@@ -73,5 +72,5 @@ rm -rf %{buildroot}
 %{_lib32dir}/
 
 %changelog
-* Mon Aug 25 2014 Mark Piper <mark.piper@colorado.edu>
-- Set up spec file for building package
+* Thu Sep 4 2014 Mark Piper <mark.piper@colorado.edu>
+- Initial build
