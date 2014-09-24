@@ -1,4 +1,6 @@
 # Packages required to build babel
-compat-gcc-34-g77
-gcc-gfortran
 libxml2
+numpy
+python-devel
+gcc-gfortran
+gcc-c++

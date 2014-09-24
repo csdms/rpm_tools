@@ -28,10 +28,14 @@ skeletons can be generated to facilitate language interoperability.
 %prep
 %setup -q
 
-# Where is Java? I used JAVAPREFIX=/usr/lib/jvm/java-1.7.0-openjdk.x86_64
+# Assuming use of Oracle JDK, installed in default location, and gfortran.
+# Python 2.7 is required for CSDMS software stack.
 %build
-%configure \
-	--disable-documentation
+%configure --disable-documentation \
+	   --with-F90-vendor=GNU \
+	   --with-libparsifal=local \
+	   --enable-java=/usr/java/default \
+	   --enable-python=/usr/local/bin/python2.7
 make %{?_smp_mflags}
 
 %install
@@ -42,7 +46,7 @@ make install DESTDIR=%{buildroot}
 %postun -p /sbin/ldconfig
 
 %check
-#make check
+#make check # loooong
 
 %clean
 rm -rf %{buildroot}
@@ -72,5 +76,5 @@ rm -rf %{buildroot}
 %{_lib32dir}/
 
 %changelog
-* Thu Sep 4 2014 Mark Piper <mark.piper@colorado.edu>
+* Wed Sep 24 2014 Mark Piper <mark.piper@colorado.edu>
 - Initial build
