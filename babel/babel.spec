@@ -1,6 +1,7 @@
-%define _lib32dir /usr/lib
+%define _lib32dir %{_prefix}/lib
+%define docdir %{_datadir}/doc
 %define url http://computation.llnl.gov/casc/components
- 
+
 Name:		babel
 Version:	1.4.0
 Release:	1%{?dist}
@@ -41,6 +42,15 @@ make %{?_smp_mflags}
 %install
 rm -rf %{buildroot}
 make install DESTDIR=%{buildroot}
+install -d -m755 %{buildroot}%{docdir}/%{name}-%{version}
+install -m664 ANNOUNCE %{buildroot}%{docdir}/%{name}-%{version}/
+install -m664 BUGS %{buildroot}%{docdir}/%{name}-%{version}/
+install -m664 CHANGES %{buildroot}%{docdir}/%{name}-%{version}/
+install -m664 COPYRIGHT %{buildroot}%{docdir}/%{name}-%{version}/
+install -m664 INSTALL %{buildroot}%{docdir}/%{name}-%{version}/
+install -m664 LICENSE %{buildroot}%{docdir}/%{name}-%{version}/
+install -m664 README %{buildroot}%{docdir}/%{name}-%{version}/
+install -m664 THANKS %{buildroot}%{docdir}/%{name}-%{version}/
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -53,7 +63,14 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-%doc ANNOUNCE BUGS CHANGES COPYRIGHT INSTALL LICENSE README THANKS
+%{docdir}/%{name}-%{version}/ANNOUNCE
+%{docdir}/%{name}-%{version}/BUGS
+%{docdir}/%{name}-%{version}/CHANGES
+%{docdir}/%{name}-%{version}/COPYRIGHT
+%{docdir}/%{name}-%{version}/INSTALL
+%{docdir}/%{name}-%{version}/LICENSE
+%{docdir}/%{name}-%{version}/README
+%{docdir}/%{name}-%{version}/THANKS
 %{_bindir}/%{name}
 %{_bindir}/%{name}-*
 %{_includedir}/%{name}_config.h
