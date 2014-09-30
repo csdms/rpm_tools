@@ -1,13 +1,15 @@
 %define docdir %{_datadir}/doc
 
 Name:		chasm
-Version:	1.4.RC3
+Version:	1.4
 Release:	1%{?dist}
 Summary:	A language transformation system created to improve Fortran and C/C++ language interoperability.
 Group:		Applications/Engineering
 License:	LANL
 URL:		http://chasm-interop.sourceforge.net
-Source0:	http://sourceforge.net/projects/chasm-interop/files/chasm_1.4.RC3.tar.gz
+# Use naming convention for source tarball files.
+#Source0:	http://sourceforge.net/projects/chasm-interop/files/chasm_1.4.RC3.tar.gz
+Source0:        %{name}-%{version}.tar.gz
 BuildRoot:	%{_topdir}/BUILDROOT/%{name}-%{version}-%{release}
 Prefix:         %{_prefix}
 
@@ -26,7 +28,7 @@ arrays. This allows arrays to be created in one language and then
 passed to and used by the other (foreign) language.
 
 %prep
-%setup -q
+%setup -q -n %{name}
 
 %build
 %configure --with-F90=$FC \
