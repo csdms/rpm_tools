@@ -1,0 +1,123 @@
+--- Makefile.in.orig	2014-09-30 09:57:52.191873992 -0600
++++ Makefile.in	2014-09-30 10:08:26.010873436 -0600
+@@ -165,68 +165,68 @@
+ # WARNING, don't remove $(bindir), etc., could be /usr/local/bin
+ #
+ install-dirs: force
+-	$(INSTALL) -d $(includedir)/compilers
+-	$(INSTALL) -d $(libdir)
+-	$(INSTALL) -d $(bindir)
+-	$(INSTALL) -d $(datadir)
+-	$(INSTALL) -d $(datadir)/xform
++	$(INSTALL) -d $(DESTDIR)$(includedir)/compilers
++	$(INSTALL) -d $(DESTDIR)$(libdir)
++	$(INSTALL) -d $(DESTDIR)$(bindir)
++	$(INSTALL) -d $(DESTDIR)$(datadir)
++	$(INSTALL) -d $(DESTDIR)$(datadir)/xform
+ 
+ install-inc: force
+-	cp include/*.h            $(includedir)
+-	cp include/compilers/*.h  $(includedir)/compilers
+-	chmod 644 $(includedir)/*.h
+-	chmod 644 $(includedir)/compilers/*.h
+-	$(INSTALL) -m 644 include/MakeIncl.chasm $(includedir)
++	cp include/*.h            $(DESTDIR)$(includedir)
++	cp include/compilers/*.h  $(DESTDIR)$(includedir)/compilers
++	chmod 644 $(DESTDIR)$(includedir)/*.h
++	chmod 644 $(DESTDIR)$(includedir)/compilers/*.h
++	$(INSTALL) -m 644 include/MakeIncl.chasm $(DESTDIR)$(includedir)
+ 
+ install-lib: force
+-	cp src/farray/*.mod			 $(libdir)
+-	chmod 644 $(libdir)/*.mod
+-	$(INSTALL) -m 644 src/farray/libchasm.a  $(libdir)
+-	$(RANLIB) $(libdir)/libchasm.a
++	cp src/farray/*.mod			 $(DESTDIR)$(libdir)
++	chmod 644 $(DESTDIR)$(libdir)/*.mod
++	$(INSTALL) -m 644 src/farray/libchasm.a  $(DESTDIR)$(libdir)
++	$(RANLIB) $(DESTDIR)$(libdir)/libchasm.a
+ 
+ install-bin: force
+-	$(INSTALL) -m 755 bin/chasm-config  $(bindir)
++	$(INSTALL) -m 755 bin/chasm-config  $(DESTDIR)$(bindir)
+ 	if [ -d test -a -f src/xmlgen/xmlgen ] ; then \
+-	    $(INSTALL) -m 755 src/xmlgen/xmlgen  $(bindir) ; \
++	    $(INSTALL) -m 755 src/xmlgen/xmlgen  $(DESTDIR)$(bindir) ; \
+ 	fi
+ 
+ install-share: force
+-	$(INSTALL) -m 644 xml/schema/mapping.dtd $(datadir)
+-	$(INSTALL) -m 644 xform/babel-cpp.impl.cc.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/babel-cpp.impl.hh.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/babel-cpp.sidl.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/babel-c.sidl.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/chasm-f90.c.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/chasm-f90.h.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/chasm-f90.hh.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/chasm-f90-init.f90.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/chasm-f90-py.c.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/chasm-bindc.i.f03.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/cca-f90-py.c.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/cca-f90.impl.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/cca-c-comp.sidl.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/cca-c-port.sidl.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/cca-cpp-comp.sidl.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/cca-cpp-port.sidl.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/cca-cpp.impl.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/cca-cpp.sidl.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/cca-f90-comp.sidl.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/cca-f90.mod.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/cca-f90-port.sidl.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/common.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/common-C.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/common-f90.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/common-py.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/common-CCA.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/common-cpp.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/common-sidl.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/common-user.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/type-conversions.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/type-conv-f90.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/type-conv-py.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/type-conv-sidl.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/type-conv-cpp.xsl $(datadir)/xform
+-	$(INSTALL) -m 644 xform/type-conv-user.xsl $(datadir)/xform
++	$(INSTALL) -m 644 xml/schema/mapping.dtd $(DESTDIR)$(datadir)
++	$(INSTALL) -m 644 xform/babel-cpp.impl.cc.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/babel-cpp.impl.hh.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/babel-cpp.sidl.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/babel-c.sidl.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/chasm-f90.c.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/chasm-f90.h.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/chasm-f90.hh.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/chasm-f90-init.f90.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/chasm-f90-py.c.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/chasm-bindc.i.f03.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/cca-f90-py.c.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/cca-f90.impl.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/cca-c-comp.sidl.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/cca-c-port.sidl.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/cca-cpp-comp.sidl.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/cca-cpp-port.sidl.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/cca-cpp.impl.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/cca-cpp.sidl.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/cca-f90-comp.sidl.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/cca-f90.mod.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/cca-f90-port.sidl.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/common.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/common-C.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/common-f90.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/common-py.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/common-CCA.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/common-cpp.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/common-sidl.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/common-user.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/type-conversions.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/type-conv-f90.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/type-conv-py.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/type-conv-sidl.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/type-conv-cpp.xsl $(DESTDIR)$(datadir)/xform
++	$(INSTALL) -m 644 xform/type-conv-user.xsl $(DESTDIR)$(datadir)/xform
+ 
+ install-local: force
+ 	rm -rf ./$(CHASM_ARCH)

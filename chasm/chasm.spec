@@ -1,3 +1,4 @@
+%define lib32dir %{_prefix}/lib
 %define docdir %{_datadir}/doc
 
 Name:		chasm
@@ -10,6 +11,8 @@ URL:		http://chasm-interop.sourceforge.net
 # Use naming convention for source tarball files.
 #Source0:	http://sourceforge.net/projects/chasm-interop/files/chasm_1.4.RC3.tar.gz
 Source0:        %{name}-%{version}.tar.gz
+# This patch includes $DESTDIR in the Makefile for a staged install.
+Patch0:		%{name}-use-DESTDIR-in-Makefile.patch
 BuildRoot:	%{_topdir}/BUILDROOT/%{name}-%{version}-%{release}
 Prefix:         %{_prefix}
 
@@ -29,11 +32,12 @@ passed to and used by the other (foreign) language.
 
 %prep
 %setup -q -n %{name}
+%patch0
 
 %build
 %configure --with-F90=$FC \
-	   --with-F90-vendor=GNU \
-make %{?_smp_mflags}
+	   --with-F90-vendor=GNU
+make %{?_smp_mflags} all
 
 %install
 rm -rf %{buildroot}
@@ -51,9 +55,11 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-# %{docdir}/%{name}-%{version}/
-# %{_bindir}/%{name}
+%{_bindir}/%{name}-config
+%{_includedir}/
+%{_datadir}/
+%{lib32dir}/
 
 %changelog
-* Fri Sep 26 2014 Mark Piper <mark.piper@colorado.edu>
+* Tue Sep 30 2014 Mark Piper <mark.piper@colorado.edu>
 - Initial build
