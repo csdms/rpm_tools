@@ -1,17 +1,16 @@
-%define _lib32dir %{_prefix}/lib
-%define docdir %{_datadir}/doc
+%define lib32dir %{_prefix}/lib
 %define url http://computation.llnl.gov/casc/components
 
 Name:		babel
 Version:	1.4.0
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Babel is a high-performance language interoperability tool
 Group:		Applications/Engineering
 License:	LGPLv2+
 URL:		%{url}
 Source0:	%{url}/docs/%{name}-%{version}.tar.gz
 BuildRoot:	%{_topdir}/BUILDROOT/%{name}-%{version}-%{release}
-Prefix:         /usr
+Prefix:         %{_prefix}
 
 %if 0%{?_buildrequires:1}
 BuildRequires:	%{_buildrequires}
@@ -29,13 +28,16 @@ skeletons can be generated to facilitate language interoperability.
 %prep
 %setup -q
 
-# Assuming use of Oracle JDK, installed in default location, and gfortran.
+# Disable Java support, although babel still needs Java to build.
+# Use gfortran for F77, F90, F03.
 # Python 2.7 is required for CSDMS software stack.
+# Allow babel to install in %{lib32dir} for dependent packages.
 %build
 %configure --disable-documentation \
 	   --with-F90-vendor=GNU \
 	   --with-libparsifal=local \
-	   --enable-java=/usr/java/default \
+	   --disable-java \
+	   --libdir=%{lib32dir} \
 	   --enable-python=/usr/local/bin/python2.7
 make %{?_smp_mflags}
 
@@ -63,35 +65,14 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-%{docdir}/%{name}-%{version}/ANNOUNCE
-%{docdir}/%{name}-%{version}/BUGS
-%{docdir}/%{name}-%{version}/CHANGES
-%{docdir}/%{name}-%{version}/COPYRIGHT
-%{docdir}/%{name}-%{version}/INSTALL
-%{docdir}/%{name}-%{version}/LICENSE
-%{docdir}/%{name}-%{version}/README
-%{docdir}/%{name}-%{version}/THANKS
-%{_bindir}/%{name}
-%{_bindir}/%{name}-*
-%{_includedir}/%{name}_config.h
-%{_includedir}/c
-%{_includedir}/cxx/
-%{_includedir}/f77/
-%{_includedir}/f90/
-%{_includedir}/java/
-%{_includedir}/libparsifal/
-%{_includedir}/python2.7/
-%{_includedir}/sidl*
-%{_datadir}/%{name}-%{version}/
-%{_datadir}/%{name}-runtime-%{version}/patches/*.txt
-%{_datadir}/sgml/%{name}-%{version}/config/*
-%{_datadir}/aclocal/*.m4
-%{_datadir}/*.sidl
-%{_libdir}/libchasmlite*
-%{_libdir}/libparsifal*
-%{_libdir}/libsidl*
-%{_lib32dir}/
+%{_bindir}/
+%{_includedir}/
+%{_datadir}/
+%{lib32dir}/
 
 %changelog
+* Wed Oct 1 2014 Mark Piper <mark.piper@colorado.edu>
+- Allow babel to install in lib/ instead of lib64/ 
+
 * Wed Sep 24 2014 Mark Piper <mark.piper@colorado.edu>
 - Initial build
