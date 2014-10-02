@@ -22,9 +22,15 @@ CCA Specification Babel bindings.
 %prep
 %setup -q
 
+# Following babel, allow cca-spec-babel to install in %{lib32dir} for 
+# dependent packages.
+# Python 2.7 is required for CSDMS software stack.
 %build
 %configure --disable-contrib \
-	   --with-F90-vendor=GNU
+	   --with-babel-config=/usr/local/csdms/bin/babel-config \
+	   --libdir=%{lib32dir} \
+	   --with-babel-python \
+	   --with-util-python=$(which python2.7)
 make %{?_smp_mflags} all
 
 %install
@@ -39,11 +45,11 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-# %{_bindir}/%{name}-config
-# %{_includedir}/
-# %{_datadir}/
-# %{lib32dir}/
+%{_bindir}/
+%{_includedir}/
+%{_datadir}/
+%{lib32dir}/
 
 %changelog
-* Tue Sep 30 2014 Mark Piper <mark.piper@colorado.edu>
+* Wed Oct 1 2014 Mark Piper <mark.piper@colorado.edu>
 - Initial build
