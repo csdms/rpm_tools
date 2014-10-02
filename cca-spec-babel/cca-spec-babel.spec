@@ -27,7 +27,7 @@ CCA Specification Babel bindings.
 # Python 2.7 is required for CSDMS software stack.
 %build
 %configure --disable-contrib \
-	   --with-babel-config=/usr/local/csdms/bin/babel-config \
+	   --with-babel-config=%{_prefix}/bin/babel-config \
 	   --libdir=%{lib32dir} \
 	   --with-babel-python \
 	   --with-util-python=/usr/local/bin/python2.7
