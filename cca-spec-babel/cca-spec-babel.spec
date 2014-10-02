@@ -30,7 +30,7 @@ CCA Specification Babel bindings.
 	   --with-babel-config=/usr/local/csdms/bin/babel-config \
 	   --libdir=%{lib32dir} \
 	   --with-babel-python \
-	   --with-util-python=$(which python2.7)
+	   --with-util-python=/usr/local/bin/python2.7
 make %{?_smp_mflags} all
 
 %install
