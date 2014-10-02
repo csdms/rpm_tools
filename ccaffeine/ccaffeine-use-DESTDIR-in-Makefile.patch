@@ -1,0 +1,11 @@
+--- Makefile.in.orig	2014-10-02 15:09:18.152787176 -0600
++++ Makefile.in	2014-10-02 15:10:29.609790098 -0600
+@@ -81,7 +81,7 @@
+ 
+ install:
+ 	$(MAKE) -f Makefile.install install
+-	$(bindir)/simpleTests$(binsuffix)
++	$(DESTDIR)$(bindir)/simpleTests$(binsuffix)
+ 
+ install-notest:
+ 	$(MAKE) -f Makefile.install install

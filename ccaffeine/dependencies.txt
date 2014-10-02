@@ -1,0 +1,5 @@
+# Packages required to build ccaffeine
+libxml2
+libxml2-devel
+babel
+cca-spec-babel
