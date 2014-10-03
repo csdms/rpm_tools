@@ -1,0 +1,4 @@
+# Packages required to build bocca
+babel
+cca-spec-babel
+ccaffeine
