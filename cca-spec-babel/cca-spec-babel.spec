@@ -36,6 +36,9 @@ make %{?_smp_mflags} all
 %install
 rm -rf %{buildroot}
 make install DESTDIR=%{buildroot}
+install -d -m755 %{buildroot}%{docdir}/%{name}-%{version}
+install -m664 CHANGELOG TODO \
+	%{buildroot}%{docdir}/%{name}-%{version}/
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig

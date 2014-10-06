@@ -1,4 +1,5 @@
 %define lib32dir %{_prefix}/lib
+%define docdir %{_datadir}/doc
 
 Name:		ccaffeine
 Version:	0.8.8
@@ -47,6 +48,9 @@ make # deparallelize
 %install
 rm -rf %{buildroot}
 make install DESTDIR=%{buildroot}
+install -d -m755 %{buildroot}%{docdir}/%{name}-%{version}
+install -m664 A.GETTING.STARTED.html Changelog.* DEVELOPER README* TODO-list \
+	%{buildroot}%{docdir}/%{name}-%{version}/
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig

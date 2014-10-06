@@ -43,9 +43,7 @@ make %{?_smp_mflags} all
 rm -rf %{buildroot}
 make install DESTDIR=%{buildroot}
 install -d -m755 %{buildroot}%{docdir}/%{name}-%{version}
-install -m664 INSTALL %{buildroot}%{docdir}/%{name}-%{version}/
-install -m664 LICENSE %{buildroot}%{docdir}/%{name}-%{version}/
-install -m664 README %{buildroot}%{docdir}/%{name}-%{version}/
+install -m664 INSTALL LICENSE README %{buildroot}%{docdir}/%{name}-%{version}/
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig

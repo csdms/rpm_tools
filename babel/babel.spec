@@ -45,14 +45,8 @@ make %{?_smp_mflags}
 rm -rf %{buildroot}
 make install DESTDIR=%{buildroot}
 install -d -m755 %{buildroot}%{docdir}/%{name}-%{version}
-install -m664 ANNOUNCE %{buildroot}%{docdir}/%{name}-%{version}/
-install -m664 BUGS %{buildroot}%{docdir}/%{name}-%{version}/
-install -m664 CHANGES %{buildroot}%{docdir}/%{name}-%{version}/
-install -m664 COPYRIGHT %{buildroot}%{docdir}/%{name}-%{version}/
-install -m664 INSTALL %{buildroot}%{docdir}/%{name}-%{version}/
-install -m664 LICENSE %{buildroot}%{docdir}/%{name}-%{version}/
-install -m664 README %{buildroot}%{docdir}/%{name}-%{version}/
-install -m664 THANKS %{buildroot}%{docdir}/%{name}-%{version}/
+install -m664 ANNOUNCE BUGS CHANGES COPYRIGHT INSTALL LICENSE README THANKS \
+	%{buildroot}%{docdir}/%{name}-%{version}/
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
