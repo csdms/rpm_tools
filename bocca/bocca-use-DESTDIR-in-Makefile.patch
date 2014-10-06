@@ -1,0 +1,11 @@
+--- Makefile.in.orig	2014-10-06 15:05:51.968637359 -0600
++++ Makefile.in	2014-10-06 15:06:05.782633106 -0600
+@@ -27,7 +27,7 @@
+ 
+ # if you do not set PREFIX, INSTALL_OPTS, it tries to pollute your python distribution.
+ PREFIX=@prefix@
+-INSTALL_OPTS= --prefix=$(PREFIX)
++INSTALL_OPTS= --prefix=$(DESTDIR)$(PREFIX)
+ 
+ # typically no build opts needed.
+ BUILD_OPTS= 
