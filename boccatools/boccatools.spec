@@ -1,16 +1,16 @@
 %define lib32dir %{_prefix}/lib
 %define docdir %{_datadir}/doc
 
-Name:		bocca
-Version:	0.5.7
+Name:		boccatools
+Version:	%{_version}
 Release:	1%{?dist}
-Summary:	A CCA tool for managing a set of SIDL-based entities
+Summary:	Python utilities for bocca
 Group:		Applications/Engineering
-License:	Other
-URL:		http://www.cca-forum.org
-Source0:	http://www.cca-forum.org/download/cca-tools/cca-tools-latest/bocca-0.5.7.tar.gz
-# This patch includes $DESTDIR in the Makefile for a staged install.
-Patch0:		%{name}-use-DESTDIR-in-Makefile.patch
+License:	MIT
+URL:		http://csdms.colorado.edu
+# The BoccaTools source can be checked out from the CSDMS Trac site:
+# $ svn co https://csdms.colorado.edu/svn/bocca_tools/trunk
+Source0:	%{name}-%{version}.tar.gz
 BuildRoot:	%{_topdir}/BUILDROOT/%{name}-%{version}-%{release}
 Prefix:         %{_prefix}
 
@@ -19,44 +19,25 @@ BuildRequires:	%{_buildrequires}
 %endif
 
 %description
-Bocca is a tool in the CCA tool chain that was designed to help users
-create, edit, and manage a set of SIDL-based entities, including the
-CCA components and ports associated with a particular project. Bocca
-was developed to address usability concerns and reduce the development
-effort required to implement multilanguage component
-applications. Bocca was designed specifically to free users from
-mundane, time-consuming, low-level tasks so they can focus on the
-scientific aspects of their applications. It can be viewed as a
-development environment tool that allows application developers to
-perform rapid component prototyping while maintaining robust software
-engineering practices suitable to HPC environments.
+The Python utilities `bocca-build`, `bocca-clone`, `bocca-ignore`, and 
+`bocca-save`.
 
 %prep
 %setup -q
-%patch0
 
-# Following babel, allow bocca to install libraries in %{lib32dir}.
+%build
+
+# Following babel, allow boccatools to install libraries in %{lib32dir}.
 # The package install location should be /usr/local/csdms.
 # Python 2.7 is required for the CSDMS software stack.
-%build
-%configure --libdir=%{lib32dir} \
-	   --with-ccafe-config=%{_prefix}/bin/ccafe-config \
-	   --with-cca-spec-babel-config=%{_prefix}/bin/cca-spec-babel-config \
-	   --with-babel-config=%{_prefix}/bin/babel-config \
-	   --with-python=/usr/local/bin/python2.7
-make build %{?_smp_mflags}
-
 %install
 rm -rf %{buildroot}
-make install DESTDIR=%{buildroot}
+/usr/local/bin/python2.7 setup.py install \
+			 --prefix=%{buildroot}%{_prefix} \
+			 --single-version-externally-managed \
+			 --record="installed.txt"
 install -d -m755 %{buildroot}%{docdir}/%{name}-%{version}
-install -m664 proposed.LICENSE.bocca.txt README TODO \
-	%{buildroot}%{docdir}/%{name}-%{version}/
-mv %{buildroot}/%{_prefix}/share/doc/*.html \
-   %{buildroot}%{docdir}/%{name}-%{version}/
-
-%post -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+install -m664 installed.txt %{buildroot}%{docdir}/%{name}-%{version}/
 
 %clean
 rm -rf %{buildroot}
@@ -65,8 +46,8 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 %{_bindir}/
 %{lib32dir}/
-%{docdir}/
+%{_datadir}/
 
 %changelog
-* Mon Oct 6 2014 Mark Piper <mark.piper@colorado.edu>
+* Tue Oct 7 2014 Mark Piper <mark.piper@colorado.edu>
 - Initial build
