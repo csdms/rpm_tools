@@ -30,23 +30,30 @@ utilities for developing individual models.
 %prep
 %setup -q -n %{name}
 
-# Following babel, allow bocca to install libraries in %{lib32dir}.
-# The package install location should be /usr/local/csdms.
-# Python 2.7 is required for the CSDMS software stack.
-# ESMF requires several environment variables...
+# ESMF requires environment variables.
 %build
-export ESMF_DIR=%{_builddir}
-#export ESMF_COMM="mpiuni"
-#export ESMF_COMPILER=gfortran
+export ESMF_DIR=%{_builddir}/%{name}
 export ESMF_INSTALL_PREFIX=%{buildroot}%{_prefix}
 make info > build-info.txt
 make lib
 
+# Following babel, allow esmf to install libraries in %{lib32dir}.
+# The package install location should be /usr/local/csdms.
+# Note that, unless set externally, environment variables don't transfer 
+# between the sections of a spec file.
 %install
+export ESMF_DIR=%{_builddir}/%{name}
+export ESMF_INSTALL_PREFIX=%{buildroot}%{_prefix}
 rm -rf %{buildroot}
 make install DESTDIR=%{buildroot}
 install -d -m755 %{buildroot}%{docdir}/%{name}-%{version}
-install -m755 build-info.txt %{buildroot}%{docdir}/%{name}-%{version}/
+install -m755 build-info.txt LICENSE README \
+	%{buildroot}%{docdir}/%{name}-%{version}/
+
+%check
+export ESMF_DIR=%{_builddir}/%{name}
+export ESMF_INSTALL_PREFIX=%{buildroot}%{_prefix}
+make check
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -56,9 +63,11 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-#%{_bindir}/
-#%{lib32dir}/
-#%{docdir}/
+%{_bindir}/
+%{lib32dir}/
+%{_includedir}/
+%{_prefix}/mod/
+%{_datadir}
 
 %changelog
 * Tue Oct 7 2014 Mark Piper <mark.piper@colorado.edu>
