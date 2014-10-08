@@ -1,5 +1,6 @@
 %define lib32dir %{_prefix}/lib
 %define docdir %{_datadir}/doc
+%define esmfmkfile %{_builddir}/%{name}/lib/libO/Linux.gfortran.64.mpiuni.default/esmf.mk
 
 Name:		esmf
 Version:	6.3.0
@@ -19,13 +20,19 @@ BuildRequires:	%{_buildrequires}
 %endif
 
 %description
-The Earth System Modeling Framework (ESMF) collaboration is building
-high-performance, flexible software infrastructure to increase ease of
-use, performance portability, interoperability, and reuse in climate,
-numerical weather prediction, data assimilation, and other Earth
-science applications. The ESMF defines an architecture for composing
-complex, coupled modeling systems and includes data structures and
-utilities for developing individual models.
+The Earth System Modeling Framework (ESMF) defines an architecture for
+composing complex, coupled modeling systems and includes data
+structures and utilities for developing individual models. It has a
+robust, parallel and scalable remapping package, used to generate
+remapping weights. It can handle a wide variety of grids and options:
+logically rectangular grids and unstructured meshes; regional or
+global grids; 2D or 3D; and pole and masking options. ESMPy supports a
+single-tile logically rectangular discretization type called Grid and
+an unstructured discretization type called Mesh (ESMF also supports
+observational data streams). ESMPy supports bilinear, finite element
+patch recovery and first-order conservative regridding.  There is also
+an option to ignore unmapped destination points and mask out points on
+either the source or destination.
 
 %prep
 %setup -q -n %{name}
@@ -36,6 +43,8 @@ export ESMF_DIR=%{_builddir}/%{name}
 export ESMF_INSTALL_PREFIX=%{buildroot}%{_prefix}
 make info > build-info.txt
 make lib
+cd %{_builddir}/%{name}/src/addon/ESMPy
+/usr/local/bin/python2.7 setup.py build --ESMFMKFILE=%{esmfmkfile}
 
 # Following babel, allow esmf to install libraries in %{lib32dir}.
 # The package install location should be /usr/local/csdms.
@@ -49,6 +58,11 @@ make install DESTDIR=%{buildroot}
 install -d -m755 %{buildroot}%{docdir}/%{name}-%{version}
 install -m755 build-info.txt LICENSE README \
 	%{buildroot}%{docdir}/%{name}-%{version}/
+cd %{_builddir}/%{name}/src/addon/ESMPy
+/usr/local/bin/python2.7 setup.py install --prefix=%{buildroot}%{_prefix}
+install -d -m755 %{buildroot}%{docdir}/%{name}-%{version}/ESMPy
+install -m755 LICENSE README \
+	%{buildroot}%{docdir}/%{name}-%{version}/ESMPy/
 
 %check
 export ESMF_DIR=%{_builddir}/%{name}
