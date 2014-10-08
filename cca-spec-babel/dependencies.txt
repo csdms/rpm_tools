@@ -1,4 +1,4 @@
-# Packages required to build chasm
+# Packages required to build cca-spec-babel
 gcc-gfortran
 libxml2
 libxml2-devel

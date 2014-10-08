@@ -3,7 +3,7 @@
 
 Name:		cca-spec-babel
 Version:	0.8.6
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	CCA Specification Babel bindings
 Group:		Applications/Engineering
 License:	Other
@@ -23,14 +23,12 @@ CCA Specification Babel bindings.
 %setup -q
 
 # Following babel, allow cca-spec-babel to install in %{lib32dir} for 
-# dependent packages.
-# Python 2.7 is required for CSDMS software stack.
+# dependent packages. Python 2.7, required for building the CSDMS software 
+# stack, is inherited from babel.
 %build
 %configure --disable-contrib \
 	   --with-babel-config=%{_prefix}/bin/babel-config \
-	   --libdir=%{lib32dir} \
-	   --with-babel-python \
-	   --with-util-python=/usr/local/bin/python2.7
+	   --libdir=%{lib32dir}
 make %{?_smp_mflags} all
 
 %install
@@ -54,5 +52,8 @@ rm -rf %{buildroot}
 %{lib32dir}/
 
 %changelog
+* Wed Oct  8 2014 Mark Piper <mpiper@siwenna.colorado.edu> - 0.8.6-2
+- Remove Python flags from configure; get them from babel.
+
 * Wed Oct 1 2014 Mark Piper <mark.piper@colorado.edu>
 - Initial build
