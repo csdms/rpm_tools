@@ -1,0 +1,11 @@
+# Packages required to build cmi
+babel
+cca-spec-babel
+cmake
+pkgconfig
+bocca
+boccatools
+child
+sedflux
+hydrotrend
+cem
