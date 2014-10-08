@@ -18,12 +18,12 @@ BuildRequires:	%{_buildrequires}
 
 %description
 Babel is a tool that enables software written in different languages
-to communicate. It accomplishes this task by using an Interface
-Definition Language (IDL) similar to COM and CORBA. Babel relies on
-the Scientific Interface Definition Language (SIDL) that is
-specifically tuned for scientific applications. By expressing software
-interfaces, or APIs1, in SIDL the appropriate glue code stubs and
-skeletons can be generated to facilitate language interoperability.
+to communicate. It accomplishes this task by using an interface
+definition language, the Scientific Interface Definition Language
+(SIDL), that is specifically tuned for scientific applications. By
+expressing software interfaces in SIDL, the appropriate glue code
+stubs and skeletons can be generated to facilitate language
+interoperability.
 
 %prep
 %setup -q
