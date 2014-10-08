@@ -1,0 +1,4 @@
+# Packages required to build coupling
+scipy
+esmf
+netcdf
