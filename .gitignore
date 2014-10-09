@@ -22,6 +22,7 @@ var/
 .installed.cfg
 *.egg
 *.tar.gz
+*.tgz
 
 # Installer logs
 pip-log.txt
