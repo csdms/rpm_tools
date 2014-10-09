@@ -1,6 +1,5 @@
 # Packages required to build babel
 libxml2
-numpy
-python-devel
 gcc-gfortran
 gcc-c++
+csdms-python

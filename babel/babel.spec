@@ -1,9 +1,10 @@
 %define lib32dir %{_prefix}/lib
+%define docdir %{_datadir}/doc
 %define url http://computation.llnl.gov/casc/components
 
 Name:		babel
 Version:	1.4.0
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	Babel is a high-performance language interoperability tool
 Group:		Applications/Engineering
 License:	LGPLv2+
@@ -30,15 +31,15 @@ interoperability.
 
 # Disable Java support, although babel still needs Java to build.
 # Use gfortran for F77, F90, F03.
-# Python 2.7 is required for CSDMS software stack.
+# Python 2.7 (provided by csdms-python) is required for CSDMS software stack.
 # Allow babel to install in %{lib32dir} for dependent packages.
 %build
 %configure --disable-documentation \
 	   --with-F90-vendor=GNU \
 	   --with-libparsifal=local \
 	   --disable-java \
-	   --libdir=%{lib32dir} \
-	   --enable-python=/usr/local/bin/python2.7
+	   --enable-python=%{_prefix}/bin/python \
+	   --libdir=%{lib32dir}
 make %{?_smp_mflags}
 
 %install
@@ -47,6 +48,7 @@ make install DESTDIR=%{buildroot}
 install -d -m755 %{buildroot}%{docdir}/%{name}-%{version}
 install -m664 ANNOUNCE BUGS CHANGES COPYRIGHT INSTALL LICENSE README THANKS \
 	%{buildroot}%{docdir}/%{name}-%{version}/
+rm %{buildroot}%{_includedir}/c # remove sketchy symlink
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -65,6 +67,9 @@ rm -rf %{buildroot}
 %{lib32dir}/
 
 %changelog
+* Thu Oct  9 2014 Mark Piper <mark.piper@colorado.edu> - 1.4.0-3
+- Use csdms-python package
+
 * Wed Oct 1 2014 Mark Piper <mark.piper@colorado.edu>
 - Allow babel to install in lib/ instead of lib64/ 
 
