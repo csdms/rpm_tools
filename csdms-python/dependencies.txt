@@ -1,0 +1,3 @@
+# Packages required to build csdms-python
+gcc-c++
+hdf5-devel
