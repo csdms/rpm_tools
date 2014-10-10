@@ -38,7 +38,7 @@ interoperability.
 	   --with-F90-vendor=GNU \
 	   --with-libparsifal=local \
 	   --disable-java \
-	   --enable-python=%{_prefix}/bin/python \
+	   --enable-python=$CSDMS_PYTHON \
 	   --libdir=%{lib32dir}
 make %{?_smp_mflags}
 
@@ -68,7 +68,7 @@ rm -rf %{buildroot}
 
 %changelog
 * Thu Oct  9 2014 Mark Piper <mark.piper@colorado.edu> - 1.4.0-3
-- Use csdms-python package
+- Use csdms-python package and $CSDMS_PYTHON
 
 * Wed Oct 1 2014 Mark Piper <mark.piper@colorado.edu>
 - Allow babel to install in lib/ instead of lib64/ 
