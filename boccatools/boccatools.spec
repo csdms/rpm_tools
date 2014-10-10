@@ -3,7 +3,7 @@
 
 Name:		boccatools
 Version:	%{_version}
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Python utilities for bocca
 Group:		Applications/Engineering
 License:	MIT
@@ -29,13 +29,13 @@ The Python utilities `bocca-build`, `bocca-clone`, `bocca-ignore`, and
 
 # Following babel, allow boccatools to install libraries in %{lib32dir}.
 # The package install location should be /usr/local/csdms.
-# Get Python from babel.
+# Use the CSDMS Python distribution.
 %install
 rm -rf %{buildroot}
-$(%{_prefix}/bin/babel-config --which-var=PYTHON) setup.py install \
-	 --prefix=%{buildroot}%{_prefix} \
-	 --single-version-externally-managed \
-	 --record="installed.txt"
+$CSDMS_PYTHON setup.py install \
+	      --prefix=%{buildroot}%{_prefix} \
+	      --single-version-externally-managed \
+	      --record="installed.txt"
 install -d -m755 %{buildroot}%{docdir}/%{name}-%{version}
 install -m664 installed.txt %{buildroot}%{docdir}/%{name}-%{version}/
 
@@ -49,5 +49,8 @@ rm -rf %{buildroot}
 %{_datadir}/
 
 %changelog
+* Fri Oct 10 2014 Mark Piper <mpiper@siwenna.colorado.edu> - %{_version}-2
+- Use $CSDMS_PYTHON
+
 * Tue Oct 7 2014 Mark Piper <mark.piper@colorado.edu>
 - Initial build
