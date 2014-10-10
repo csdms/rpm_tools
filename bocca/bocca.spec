@@ -37,13 +37,11 @@ engineering practices suitable to HPC environments.
 
 # Following babel, allow bocca to install libraries in %{lib32dir}.
 # The package install location should be /usr/local/csdms.
-# Python 2.7 is required for the CSDMS software stack.
 %build
 %configure --libdir=%{lib32dir} \
 	   --with-ccafe-config=%{_prefix}/bin/ccafe-config \
 	   --with-cca-spec-babel-config=%{_prefix}/bin/cca-spec-babel-config \
-	   --with-babel-config=%{_prefix}/bin/babel-config \
-	   --with-python=/usr/local/bin/python2.7
+	   --with-babel-config=%{_prefix}/bin/babel-config
 make build %{?_smp_mflags}
 
 %install
