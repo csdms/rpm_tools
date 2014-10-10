@@ -1,2 +1,3 @@
 # Packages required to build boccatools
 bocca
+babel

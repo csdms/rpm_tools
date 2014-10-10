@@ -29,13 +29,13 @@ The Python utilities `bocca-build`, `bocca-clone`, `bocca-ignore`, and
 
 # Following babel, allow boccatools to install libraries in %{lib32dir}.
 # The package install location should be /usr/local/csdms.
-# Python 2.7 is required for the CSDMS software stack.
+# Get Python from babel.
 %install
 rm -rf %{buildroot}
-/usr/local/bin/python2.7 setup.py install \
-			 --prefix=%{buildroot}%{_prefix} \
-			 --single-version-externally-managed \
-			 --record="installed.txt"
+$(%{_prefix}/bin/babel-config --which-var=PYTHON) setup.py install \
+	 --prefix=%{buildroot}%{_prefix} \
+	 --single-version-externally-managed \
+	 --record="installed.txt"
 install -d -m755 %{buildroot}%{docdir}/%{name}-%{version}
 install -m664 installed.txt %{buildroot}%{docdir}/%{name}-%{version}/
 
