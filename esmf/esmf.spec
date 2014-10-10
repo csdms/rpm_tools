@@ -4,7 +4,7 @@
 
 Name:		esmf
 Version:	6.3.0
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Software for building and coupling weather, climate, and related models
 Group:		Applications/Engineering
 License:	NCSA
@@ -44,7 +44,7 @@ export ESMF_INSTALL_PREFIX=%{buildroot}%{_prefix}
 make info > build-info.txt
 make lib
 cd %{_builddir}/%{name}/src/addon/ESMPy
-/usr/local/bin/python2.7 setup.py build --ESMFMKFILE=%{esmfmkfile}
+$CSDMS_PYTHON setup.py build --ESMFMKFILE=%{esmfmkfile}
 
 # Following babel, allow esmf to install libraries in %{lib32dir}.
 # The package install location should be /usr/local/csdms.
@@ -59,7 +59,7 @@ install -d -m755 %{buildroot}%{docdir}/%{name}-%{version}
 install -m755 build-info.txt LICENSE README \
 	%{buildroot}%{docdir}/%{name}-%{version}/
 cd %{_builddir}/%{name}/src/addon/ESMPy
-/usr/local/bin/python2.7 setup.py install --prefix=%{buildroot}%{_prefix}
+$CSDMS_PYTHON setup.py install --prefix=%{buildroot}%{_prefix}
 install -d -m755 %{buildroot}%{docdir}/%{name}-%{version}/ESMPy
 install -m755 LICENSE README \
 	%{buildroot}%{docdir}/%{name}-%{version}/ESMPy/
@@ -84,5 +84,8 @@ rm -rf %{buildroot}
 %{_datadir}
 
 %changelog
+* Fri Oct 10 2014 Mark Piper <mpiper@siwenna.colorado.edu> - 6.3.0-2
+- Use $CSDMS_PYTHON to build ESMPy
+
 * Tue Oct 7 2014 Mark Piper <mark.piper@colorado.edu>
 - Initial build

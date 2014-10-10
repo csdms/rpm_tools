@@ -1,3 +1,4 @@
 # Packages required to build esmf
 gcc-gfortran
 gcc-c++
+csdms-python
