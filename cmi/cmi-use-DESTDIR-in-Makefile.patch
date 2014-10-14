@@ -1,0 +1,17 @@
+--- Makefile.orig	2014-10-14 10:36:08.834235761 -0600
++++ Makefile	2014-10-14 10:37:44.050894327 -0600
+@@ -76,10 +76,10 @@
+ 	$(HIDE_LIBTOOL)for dir in $(CLIENTDIRS) components; do \
+ 		$(MAKE) $(CCA_MAKEFLAGS) -C $$dir INSTALL_LANGUAGES="$(INSTALL_LANGUAGES)" install; \
+ 	done
+-	@-if ! test -d $(libdir) ; then $(UTILS_DIR)/mkdirhier $(libdir) >& /dev/null; fi
+-	@-if ! test -d $(bindir) ; then $(UTILS_DIR)/mkdirhier $(bindir) >& /dev/null; fi
+-	$(INSTALL) utils/$(PROJECT_NAME)-config $(bindir)
+-	$(INSTALL_DATA) utils/config-data $(libdir)/$(PROJECT_NAME).config-data
++	@-if ! test -d $(DESTDIR)$(libdir) ; then $(UTILS_DIR)/mkdirhier $(DESTDIR)$(libdir) >& /dev/null; fi
++	@-if ! test -d $(DESTDIR)$(bindir) ; then $(UTILS_DIR)/mkdirhier $(DESTDIR)$(bindir) >& /dev/null; fi
++	$(INSTALL) utils/$(PROJECT_NAME)-config $(DESTDIR)$(bindir)
++	$(INSTALL_DATA) utils/config-data $(DESTDIR)$(libdir)/$(PROJECT_NAME).config-data
+ 	@-echo "################### Finished installing everything ####################"
+ 	@-echo "####### You can run some simple tests with 'make install-check' #######"
+ 

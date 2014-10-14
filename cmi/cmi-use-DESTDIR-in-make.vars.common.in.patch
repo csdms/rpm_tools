@@ -1,0 +1,15 @@
+--- buildutils/make.vars.common.in.orig	2014-10-14 10:27:55.074181659 -0600
++++ buildutils/make.vars.common.in	2014-10-14 10:28:36.080605608 -0600
+@@ -80,9 +80,9 @@
+ endif
+ ifneq ($(INSTALL_TARGET),install_local)
+     PREFIX:=$(prefix)
+-    INSTALL_LIB_DIR=$(libdir)
+-    INSTALL_INCLUDE_DIR=$(includedir)/$(PROJECT_NAME)
+-    INSTALL_DATA_DIR=$(datarootdir)
++    INSTALL_LIB_DIR=$(DESTDIR)$(libdir)
++    INSTALL_INCLUDE_DIR=$(DESTDIR)$(includedir)/$(PROJECT_NAME)
++    INSTALL_DATA_DIR=$(DESTDIR)$(datarootdir)
+ else
+     PREFIX=$(LOCAL_INSTALL_PREFIX)
+     INSTALL_LIB_DIR=$(LOCAL_INSTALL_PREFIX)/lib

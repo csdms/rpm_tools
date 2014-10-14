@@ -1,8 +1,9 @@
 # Packages required to build cmi
-babel
-cca-spec-babel
 cmake
 pkgconfig
+glib
+babel
+cca-spec-babel
 bocca
 boccatools
 child
