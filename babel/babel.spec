@@ -4,7 +4,7 @@
 
 Name:		babel
 Version:	1.4.0
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	Babel is a high-performance language interoperability tool
 Group:		Applications/Engineering
 License:	LGPLv2+
@@ -48,7 +48,12 @@ make install DESTDIR=%{buildroot}
 install -d -m755 %{buildroot}%{docdir}/%{name}-%{version}
 install -m664 ANNOUNCE BUGS CHANGES COPYRIGHT INSTALL LICENSE README THANKS \
 	%{buildroot}%{docdir}/%{name}-%{version}/
-rm %{buildroot}%{_includedir}/c # remove sketchy symlink
+
+# Remove sketchy symlink.
+rm %{buildroot}%{_includedir}/c 
+
+# Remove bogus %{buildroot} path from lib/*.scl files.
+sed -i 's@%{buildroot}@@' %{buildroot}%{lib32dir}/*.scl
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -67,6 +72,9 @@ rm -rf %{buildroot}
 %{lib32dir}/
 
 %changelog
+* Wed Oct 15 2014 Mark Piper <mark.piper@.colorado.edu> - 1.4.0-4
+- Remove bogus %{buildroot} path from lib/*.scl
+
 * Thu Oct  9 2014 Mark Piper <mark.piper@colorado.edu> - 1.4.0-3
 - Use csdms-python package and $CSDMS_PYTHON
 
