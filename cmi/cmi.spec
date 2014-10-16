@@ -3,7 +3,7 @@
 
 Name:		cmi
 Version:	%{_version}
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Component wrappers for the Component Modeling Interface
 Group:		Applications/Engineering
 License:	MIT
@@ -29,8 +29,8 @@ Basic Model Interface (BMI) to create a CSDMS plug-and-play component.
 %setup -q -n %{name}
 
 %build
-export PATH=%{_prefix}/bin:$PATH
-export PKG_CONFIG_PATH=%{_prefix}/lib/pkgconfig
+export PATH=$CSDMS_DIR/bin:$PATH
+export PKG_CONFIG_PATH=$CSDMS_DIR/lib/pkgconfig
 export AVULSION_CPPFLAGS=$(pkg-config --cflags avulsion)
 export AVULSION_LDFLAGS=$(pkg-config --libs avulsion)
 export CEM_CPPFLAGS=$(pkg-config --cflags deltas)
@@ -59,11 +59,18 @@ make
 %install
 rm -rf %{buildroot}
 cd csdms
-make install DESTDIR=%{buildroot}
+make DESTDIR=%{buildroot} install
 cd %{_builddir}/%{name}
 install -d -m755 %{buildroot}%{docdir}/%{name}-%{version}
 install -m664 INSTALL.md LICENSE README.md \
 	%{buildroot}%{docdir}/%{name}-%{version}/
+
+# Replace ".la" with ".so" in share/cca/*.cca files.
+sed -i 's@\.la@.so@' %{buildroot}%{_datadir}/cca/*.cca
+
+# Remove bogus %{buildroot} path from share/cca/*.cca and lib/*.la files.
+sed -i 's@%{buildroot}@@' %{buildroot}%{_datadir}/cca/*.cca
+sed -i 's@%{buildroot}@@g' %{buildroot}%{lib32dir}/*.la
 
 %check
 cd csdms
@@ -83,5 +90,8 @@ rm -rf %{buildroot}
 %{_datadir}
 
 %changelog
+* Thu Oct 16 2014 Mark Piper <mpiper@siwenna.colorado.edu> - %{_version}-2
+- Remove bogus %{buildroot} paths from output
+
 * Tue Oct 14 2014 Mark Piper <mark.piper@colorado.edu> - %{_version}-1
 - Initial build
