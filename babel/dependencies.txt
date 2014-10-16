@@ -3,3 +3,4 @@ libxml2
 gcc-gfortran
 gcc-c++
 csdms-python
+csdms-python-tools

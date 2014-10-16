@@ -72,8 +72,9 @@ rm -rf %{buildroot}
 %{lib32dir}/
 
 %changelog
-* Wed Oct 15 2014 Mark Piper <mark.piper@.colorado.edu> - 1.4.0-4
+* Thu Oct 16 2014 Mark Piper <mark.piper@.colorado.edu> - 1.4.0-4
 - Remove bogus %{buildroot} path from lib/*.scl
+- Use csdms-python-tools package for numpy
 
 * Thu Oct  9 2014 Mark Piper <mark.piper@colorado.edu> - 1.4.0-3
 - Use csdms-python package and $CSDMS_PYTHON
