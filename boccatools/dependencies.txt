@@ -1,3 +1,4 @@
 # Packages required to build boccatools
 bocca
 babel
+csdms-python
