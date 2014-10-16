@@ -1,1 +1,1 @@
-git clone git://github.com/csdms/coupling.git
+svn export --quiet https://github.com/csdms/coupling
