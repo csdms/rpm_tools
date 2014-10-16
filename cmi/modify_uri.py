@@ -17,5 +17,5 @@ try:
     for f in glob.glob(os.path.join(cca_dir, "*.cca")):
         check_call(["sed", "--in-place", "s/\.la/.so/", f])
 except:
-    print("Error in post-install modification of *.cca files.")
+    print("Error in modification of *.cca files.")
     sys.exit(1)
