@@ -2,6 +2,7 @@
 cmake
 pkgconfig
 glib
+csdms-python
 babel
 cca-spec-babel
 bocca
