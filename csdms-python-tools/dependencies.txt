@@ -1,0 +1,3 @@
+# Packages required to build csdms-python-tools
+csdms-python
+hdf5-devel
