@@ -1,3 +1,4 @@
 # Packages required to build ccaffeine
 babel
 cca-spec-babel
+boost-devel
