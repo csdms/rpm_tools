@@ -5,6 +5,7 @@ glib
 csdms-python
 babel
 cca-spec-babel
+ccaffeine
 bocca
 boccatools
 child
