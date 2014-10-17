@@ -1,1 +1,1 @@
-svn export --quiet https://github.com/csdms/coupling
+svn export --quiet https://github.com/csdms/coupling/trunk
