@@ -5,7 +5,7 @@ Name:		coupling
 Version:	head
 Release:	1%{?dist}
 Summary:	Provides services for coupling CSDMS components
-Group:		Applications/Engineering
+Group:		Development/Tools
 License:	MIT
 URL:		http://csdms.colorado.edu
 # The Coupling source can be obtained with `git` from:
@@ -25,25 +25,27 @@ A Python package that provides services for coupling CSDMS components.
 %setup -q
 
 %build
+$CSDMS_PYTHON setup.py build
 
 %install
 rm -rf %{buildroot}
+$CSDMS_PYTHON setup.py install -O1 --skip-build --root=%{buildroot} \
+	      --record="installed.txt"
+install -d -m755 %{buildroot}%{docdir}/%{name}-%{version}
+install -m664 installed.txt %{buildroot}%{docdir}/%{name}-%{version}/
 
 %check
-
-%post -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+# $CSDMS_DIR/bin/nosetests --stop
 
 %clean
 rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-#%{_bindir}/
-#%{lib32dir}/
-#%{_includedir}/
-#%{_datadir}
+%{_bindir}/
+%{lib32dir}/
+%{_datadir}/
 
 %changelog
-* Wed Oct 8 2014 Mark Piper <mark.piper@colorado.edu>
+* Fri Oct 17 2014 Mark Piper <mark.piper@colorado.edu>
 - Initial build
