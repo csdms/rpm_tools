@@ -1,0 +1,2 @@
+# Packages required to build csdms-hdf5
+zlib-devel >= 1.1.2
