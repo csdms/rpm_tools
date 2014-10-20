@@ -4,7 +4,7 @@
 
 Name:		csdms-python-tools
 Version:	0.1
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Python packages used by CSDMS software
 Group:		Development/Libraries
 License:	MIT
@@ -20,7 +20,7 @@ BuildRequires:	%{_buildrequires}
 
 %description
 A set of Python packages that are installed with the CSDMS Python
-distribution (csdms-python).  Includes pip, NumPy, SciPy, nose,
+distribution (csdms-python). Includes pip, NumPy, SciPy, nose,
 Shapely, PyYAML and netCDF4.
 
 %prep
@@ -34,7 +34,9 @@ $CSDMS_PYTHON setup.py build
 %install
 rm -rf %{buildroot}
 $CSDMS_PYTHON setup.py install -O1 --skip-build --root %{buildroot}
-export PYTHONPATH=%{buildroot}%{_prefix}/lib/python2.7/site-packages
+export HDF5_DIR=%{_prefix}
+export NETCDF4_DIR=%{_prefix}
+export PYTHONPATH=%{buildroot}%{lib32dir}/python2.7/site-packages
 %{buildroot}%{_prefix}/bin/pip install numpy --root %{buildroot}
 %{buildroot}%{_prefix}/bin/pip install nose --root %{buildroot}
 %{buildroot}%{_prefix}/bin/pip install scipy --root %{buildroot}
@@ -42,8 +44,7 @@ export PYTHONPATH=%{buildroot}%{_prefix}/lib/python2.7/site-packages
 %{buildroot}%{_prefix}/bin/pip install shapely --root %{buildroot}
 %{buildroot}%{_prefix}/bin/pip install pyyaml --root %{buildroot}
 rm -rf %{buildroot}%{_prefix}/man
-mv %{buildroot}%{_prefix}/shapely/* \
-   %{buildroot}%{lib32dir}/python2.7/site-packages/shapely/
+mv %{buildroot}%{_prefix}/shapely/* $PYTHONPATH/shapely/
 rm -rf %{buildroot}%{_prefix}/shapely
 
 %clean
@@ -55,5 +56,8 @@ rm -rf %{buildroot}
 %{lib32dir}/
 
 %changelog
+* Mon Oct 20 2014 Mark Piper <mark.piper@colorado.edu> - 0.1-2
+- Use csdms-netcdf for the Python netCDF4 package
+
 * Thu Oct 16 2014 Mark Piper <mark.piper@colorado.edu> - 0.1-1
 - Initial build
