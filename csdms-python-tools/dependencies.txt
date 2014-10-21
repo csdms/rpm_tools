@@ -1,3 +1,4 @@
 # Packages required to build csdms-python-tools
 csdms-python
 csdms-netcdf
+geos-devel
