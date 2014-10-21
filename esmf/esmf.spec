@@ -1,12 +1,11 @@
 %define lib32dir %{_prefix}/lib
 %define docdir %{_datadir}/doc
-%define esmfmkfile %{_builddir}/%{name}/lib/libO/Linux.gfortran.64.mpiuni.default/esmf.mk
 
 Name:		esmf
 Version:	6.3.0
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	Software for building and coupling weather, climate, and related models
-Group:		Applications/Engineering
+Group:		Development/Libraries
 License:	NCSA
 URL:		http://www.earthsystemmodeling.org
 # The ESMF source can be obtained with `git` from:
@@ -30,44 +29,70 @@ global grids; 2D or 3D; and pole and masking options. ESMPy supports a
 single-tile logically rectangular discretization type called Grid and
 an unstructured discretization type called Mesh (ESMF also supports
 observational data streams). ESMPy supports bilinear, finite element
-patch recovery and first-order conservative regridding.  There is also
+patch recovery and first-order conservative regridding. There is also
 an option to ignore unmapped destination points and mask out points on
 either the source or destination.
 
 %prep
 %setup -q -n %{name}
 
-# ESMF requires environment variables.
+# ESMF uses environment variables instead of a configure script. 
+# Note that, unless set externally, environment variables don't transfer
+# between the sections of a spec file.
 %build
 export ESMF_DIR=%{_builddir}/%{name}
-export ESMF_INSTALL_PREFIX=%{buildroot}%{_prefix}
+export ESMF_INSTALL_PREFIX=%{_prefix}
+export ESMF_INSTALL_HEADERDIR=include/%name
+export ESMF_NETCDF="split"
+export ESMF_NETCDF_INCLUDE=%{_includedir}
+export ESMF_NETCDF_LIBPATH=%{lib32dir}
 make info > build-info.txt
-make lib
-cd %{_builddir}/%{name}/src/addon/ESMPy
-$CSDMS_PYTHON setup.py build --ESMFMKFILE=%{esmfmkfile}
+make %{?_smp_mflags} lib
+
+# %check
+# export ESMF_DIR=%{_builddir}/%{name}
+# export ESMF_INSTALL_PREFIX=%{_prefix}
+# export ESMF_INSTALL_HEADERDIR=include/%name
+# export ESMF_NETCDF="split"
+# export ESMF_NETCDF_INCLUDE=%{_includedir}
+# export ESMF_NETCDF_LIBPATH=%{lib32dir}
+# make check
 
 # Following babel, allow esmf to install libraries in %{lib32dir}.
 # The package install location should be /usr/local/csdms.
-# Note that, unless set externally, environment variables don't transfer 
-# between the sections of a spec file.
 %install
-export ESMF_DIR=%{_builddir}/%{name}
-export ESMF_INSTALL_PREFIX=%{buildroot}%{_prefix}
 rm -rf %{buildroot}
-make install DESTDIR=%{buildroot}
+export ESMF_DIR=%{_builddir}/%{name}
+export ESMF_INSTALL_PREFIX=%{_prefix}
+export ESMF_INSTALL_HEADERDIR=include/%name
+export ESMF_NETCDF="split"
+export ESMF_NETCDF_INCLUDE=%{_includedir}
+export ESMF_NETCDF_LIBPATH=%{lib32dir}
+
+# A horrible, awful fix, but due entirely to the design of ESMF. 
+# Starting with an empty $CSDMS_DIR, install required packages
+# for ESMF. Install ESMF and ESMPy directly into $CSDMS_DIR! Erase the
+# required packages; the remainder is ESMF. Copy the contents of
+# $CSDMS_DIR to %{buildroot} and finish.
+# sudo yum install -y csdms-python csdms-hdf5 csdms-netcdf csdms-python-tools
+sudo -E make install
+cd $ESMF_DIR/src/addon/ESMPy
+sudo -E $CSDMS_PYTHON setup.py build --ESMFMKFILE=%{lib32dir}/libO/Linux.gfortran.64.mpiuni.default/esmf.mk install
+# sudo -E $CSDMS_PYTHON setup.py test_all
+sudo yum erase -y csdms-python csdms-hdf5
+mkdir -p %{buildroot}%{_prefix}
+cp -R %{_prefix}/* %{buildroot}%{_prefix}
+sudo rm -rf %{_prefix}
+
+# Install build docs for ESMF and ESMPy. 
 install -d -m755 %{buildroot}%{docdir}/%{name}-%{version}
+cd $ESMF_DIR
 install -m755 build-info.txt LICENSE README \
 	%{buildroot}%{docdir}/%{name}-%{version}/
-cd %{_builddir}/%{name}/src/addon/ESMPy
-$CSDMS_PYTHON setup.py install --prefix=%{buildroot}%{_prefix}
 install -d -m755 %{buildroot}%{docdir}/%{name}-%{version}/ESMPy
+cd $ESMF_DIR/src/addon/ESMPy
 install -m755 LICENSE README \
 	%{buildroot}%{docdir}/%{name}-%{version}/ESMPy/
-
-%check
-export ESMF_DIR=%{_builddir}/%{name}
-export ESMF_INSTALL_PREFIX=%{buildroot}%{_prefix}
-make check
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -84,6 +109,10 @@ rm -rf %{buildroot}
 %{_datadir}
 
 %changelog
+* Tue Oct 21 2014 Mark Piper <mpiper@siwenna.colorado.edu> - 6.3.0-3
+- Implement ugly fix to get correct paths
+- Include NetCDF support
+
 * Fri Oct 10 2014 Mark Piper <mpiper@siwenna.colorado.edu> - 6.3.0-2
 - Use $CSDMS_PYTHON to build ESMPy
 
