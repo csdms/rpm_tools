@@ -2,3 +2,5 @@
 gcc-gfortran
 gcc-c++
 csdms-python
+csdms-netcdf
+csdms-python-tools
