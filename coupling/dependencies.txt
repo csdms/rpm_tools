@@ -1,3 +1,4 @@
 # Packages required to build coupling
 csdms-python
 csdms-python-tools
+esmf

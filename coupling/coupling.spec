@@ -35,7 +35,10 @@ install -d -m755 %{buildroot}%{docdir}/%{name}-%{version}
 install -m664 installed.txt %{buildroot}%{docdir}/%{name}-%{version}/
 
 %check
-# $CSDMS_DIR/bin/nosetests --stop
+export PATH=$CSDMS_DIR/bin:$PATH
+export PYTHONPATH=$($CSDMS_PYTHON -c "import site; print site.getsitepackages()[0]"):$PYTHONPATH
+export ESMFMKFILE=$CSDMS_DIR/lib/libO/Linux.gfortran.64.mpiuni.default/esmf.mk
+$CSDMS_DIR/bin/nosetests --stop
 
 %clean
 rm -rf %{buildroot}
@@ -47,5 +50,5 @@ rm -rf %{buildroot}
 %{_datadir}/
 
 %changelog
-* Fri Oct 17 2014 Mark Piper <mark.piper@colorado.edu>
+* Tue Oct 21 2014 Mark Piper <mark.piper@colorado.edu>
 - Initial build
