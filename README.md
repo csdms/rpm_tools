@@ -62,6 +62,10 @@ The tools in this project form a cascading set of dependencies.
 Build and install them in this order:
 
 1. `csdms-python`
+
+   After installing this package, set the `CSDMS_PYTHON` environment variable to the location of the Python executable:
+   	 $ export CSDMS_PYTHON=$CSDMS_DIR/bin/python
+
 1. `csdms-hdf5`
 1. `csdms-netcdf` (requires csdms-hdf5)
 1. `csdms-python-tools` (requires csdms-python, csdms-netcdf)
