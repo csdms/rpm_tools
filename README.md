@@ -1,9 +1,9 @@
-rpm-tools
+rpm_tools
 =========
 
 Recipes for building binary and source RPMs for CSDMS tools.
 
-**Requirements**
+## Requirements
 
 These recipes are designed for Linux distros 
 that are compatible with
@@ -23,7 +23,7 @@ $ sudo yum groupinstall "development tools"
 $ sudo yum install cmake git rpmdevtools
 ```
 
-**Preparation**
+## Preparation
 
 Download and install the `packagebuilder` Python package from the
 [csdms/packagebuilder](https://github.com/csdms/packagebuilder)
@@ -56,10 +56,10 @@ $ export QA_RPATHS=19
 ```
 for building RPMs.
 
-**Building and installing the CSDMS tools**
+## Building and installing the CSDMS tools
 
 The tools in this project form a cascading set of dependencies.
-Build and install in this order:
+Build and install them in this order:
 
 1. `csdms-python`
 1. `csdms-hdf5`
@@ -84,13 +84,10 @@ Many of the packages are built against a set version of a tool;
 e.g., Python 2.7.6.
 Check the package's **.spec** file to get the version
 used for input to `build_rpm`'s `tag` argument.
-
 On success,
-the RPMs will be located in the directories:
-
-* **~/rpmbuild/RPMS** (binary)
-* **~/rpmbuild/SRPMS** (source)
-
+RPMs will be located in the directories
+**~/rpmbuild/RPMS** (binary) and
+**~/rpmbuild/SRPMS** (source)
 on your machine.
 
 Install the package from the binary RPM with `rpm`.
@@ -105,7 +102,7 @@ $ $CSDMS_DIR/bin/python --version
 Python 2.7.6
 ```
 
-**The CSDMS repository**
+## The CSDMS repository
 
 Built versions of all of the tools in this project are available 
 from the CSDMS repository, 
@@ -113,3 +110,18 @@ from the CSDMS repository,
 See the [README.md](http://csdms.colorado.edu/repo/README.md) file
 for instructions on how to install these packages 
 on your machine.
+
+## About CSDMS
+
+[CSDMS](http://csdms.colorado.edu/wiki/Main_Page),
+the Community Surface Dynamics Modeling System,
+is an NSF-funded project that supports a diverse community
+of users and developers
+of earth and ocean system models. 
+CSDMS develops, integrates, archives and disseminates
+earth system models and tools to an international community
+with the goal of building the frameworks necessary
+to model the earth system.
+Modelers use CSDMS for access
+to hundreds of open source surface dynamics models and tools,
+as well as model metadata.
