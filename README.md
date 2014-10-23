@@ -7,16 +7,16 @@ Recipes for building binary and source RPMs for CSDMS tools.
 
 These recipes are designed for Linux distros 
 that are compatible with
-Red Hat Enterprise Linux (e.g., CentOS, Fedora). 
+Red Hat Enterprise Linux (e.g., CentOS, Fedora, SUSE). 
 To install CSDMS tools on Mac OS X, 
 please see the [csdms/homebrew-tools](https://github.com/csdms/homebrew-tools) 
 project.
 
-To build and install the tools in this project,
+To build and install the tools in this repository,
 the mandatory and default packages in the 
 "Development Tools" group (such as `make`, `gcc`, and `rpm-build`) 
 are required,
-as well as the optional `cmake`, `git` and `rpmdevtools` packages.
+as well as `cmake`, `git` and `rpmdevtools`.
 Install them with:
 ```bash
 $ sudo yum groupinstall "development tools"
@@ -36,19 +36,19 @@ $ sudo python setup.py install
 This installs the script `build_rpm`,
 which is used to build the RPMs for a tool.
 The standard `rpmbuild` tool can also be used,
-but `build_rpm` takes care of a lot of the busy work
+but `build_rpm` handles much of the busy work
 to make the build process easier.
 
-To separate the CSDMS software stack from other programs,
-it's designed to be installed 
+To separate CSDMS software from other programs,
+the tools in this repository are designed to be installed 
 in the directory **/usr/local/csdms**,
 although this is optional.
-Set the environment variable `CSDMS_DIR`:
+Set the environment variable `CSDMS_DIR`
+to the installation path on your machine:
 ```bash
 $ export CSDMS_DIR=/usr/local/csdms
 ```
-to the installation path on your machine.
-`CSDMS_DIR` is used by several recipes in this project.
+`CSDMS_DIR` is used by several recipes in this repository.
 
 The `QA_RPATHS` environment variable may also need to be set:
 ```bash
@@ -58,7 +58,7 @@ for building RPMs.
 
 ## Building and installing the CSDMS tools
 
-The tools in this project form a cascading set of dependencies.
+The tools in this repository form a cascading set of dependencies.
 Build and install them in this order:
 
 1. `csdms-python`
@@ -96,10 +96,12 @@ RPMs will be located in the directories
 **~/rpmbuild/SRPMS** (source)
 on your machine.
 
-Install the package from the binary RPM with `rpm`.
+Install the package from the binary RPM with `rpm` or `yum`.
 For example:
 ```bash
 $ sudo rpm -ivh csdms-python-2.7.6-2.el6.x86_64.rpm
+$ # or...
+$ sudo yum install csdms-python-2.7.6-2.el6.x86_64.rpm
 ```
 
 Check that the package was installed successfully:
@@ -110,7 +112,7 @@ Python 2.7.6
 
 ## The CSDMS repository
 
-Built versions of all of the tools in this project are available 
+Built versions of all of the tools listed here are available 
 from the CSDMS repository, 
 [http://csdms.colorado.edu/repo/](http://csdms.colorado.edu/repo/).
 See the [README.md](http://csdms.colorado.edu/repo/README.md) file
