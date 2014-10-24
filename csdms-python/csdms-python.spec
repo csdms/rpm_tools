@@ -5,12 +5,13 @@
 Name:		csdms-python
 Version:	2.7.6
 Release:	2%{?dist}
-Summary:	A Python distibution built for use by CSDMS software
+Summary:	A Python distribution built for use by CSDMS software
 Group:		Development/Languages
 License:	Python
 URL:		http://www.python.org
 #Source0:	https://www.python.org/ftp/python/2.7.6/Python-2.7.6.tgz
 Source0:	%{name}-%version.tar.gz
+Source1:	ez_setup.py
 BuildRoot:	%{_topdir}/BUILDROOT/%name-%version-%release
 Prefix:         %{_prefix}
 Autoreq:	0
