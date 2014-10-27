@@ -37,7 +37,7 @@ $CSDMS_PYTHON setup.py install -O1 --skip-build --root %{buildroot}
 export HDF5_DIR=%{_prefix}
 export NETCDF4_DIR=%{_prefix}
 export PYTHONPATH=%{buildroot}%{lib32dir}/python2.7/site-packages
-%{buildroot}%{_prefix}/bin/pip install numpy --root %{buildroot}
+%{buildroot}%{_prefix}/bin/pip install numpy==1.8 --root %{buildroot}
 %{buildroot}%{_prefix}/bin/pip install nose --root %{buildroot}
 %{buildroot}%{_prefix}/bin/pip install scipy --root %{buildroot}
 %{buildroot}%{_prefix}/bin/pip install netcdf4 --root %{buildroot}
