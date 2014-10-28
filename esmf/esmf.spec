@@ -3,7 +3,7 @@
 
 Name:		esmf
 Version:	6.3.0
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	Software for building and coupling weather, climate, and related models
 Group:		Development/Libraries
 License:	NCSA
@@ -34,13 +34,13 @@ an option to ignore unmapped destination points and mask out points on
 either the source or destination.
 
 %prep
-%setup -q -n %{name}
+%setup -q
 
 # ESMF uses environment variables instead of a configure script. 
 # Note that, unless set externally, environment variables don't transfer
 # between the sections of a spec file.
 %build
-export ESMF_DIR=%{_builddir}/%{name}
+export ESMF_DIR=%{_builddir}/%{name}-%{version}
 export ESMF_INSTALL_PREFIX=%{_prefix}
 export ESMF_INSTALL_HEADERDIR=include/%name
 export ESMF_NETCDF="split"
@@ -50,7 +50,7 @@ make info > build-info.txt
 make %{?_smp_mflags} lib
 
 # %check
-# export ESMF_DIR=%{_builddir}/%{name}
+# export ESMF_DIR=%{_builddir}/%{name}-%{version}
 # export ESMF_INSTALL_PREFIX=%{_prefix}
 # export ESMF_INSTALL_HEADERDIR=include/%name
 # export ESMF_NETCDF="split"
@@ -62,7 +62,7 @@ make %{?_smp_mflags} lib
 # The package install location should be /usr/local/csdms.
 %install
 rm -rf %{buildroot}
-export ESMF_DIR=%{_builddir}/%{name}
+export ESMF_DIR=%{_builddir}/%{name}-%{version}
 export ESMF_INSTALL_PREFIX=%{_prefix}
 export ESMF_INSTALL_HEADERDIR=include/%name
 export ESMF_NETCDF="split"
@@ -109,6 +109,9 @@ rm -rf %{buildroot}
 %{_datadir}
 
 %changelog
+* Tue Oct 28 2014 Mark Piper <mpiper@siwenna.colorado.edu> - 6.3.0-4
+- Unpack tarball to %name-%version and set ESMF_DIR
+
 * Tue Oct 21 2014 Mark Piper <mpiper@siwenna.colorado.edu> - 6.3.0-3
 - Implement ugly fix to get correct paths
 - Include NetCDF support
