@@ -27,7 +27,7 @@ CCA Specification Babel bindings.
 # stack, is inherited from babel.
 %build
 %configure --disable-contrib \
-	   --with-babel-config=%{_prefix}/bin/babel-config \
+	   --with-babel-config=%{_bindir}/babel-config \
 	   --libdir=%{lib32dir}
 make %{?_smp_mflags} all
 

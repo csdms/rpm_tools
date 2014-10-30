@@ -32,7 +32,7 @@ The Python utilities `bocca-build`, `bocca-clone`, `bocca-ignore`, and
 # Use the CSDMS Python distribution.
 %install
 rm -rf %{buildroot}
-$CSDMS_PYTHON setup.py install \
+%{_bindir}/python setup.py install \
 	      --prefix=%{buildroot}%{_prefix} \
 	      --single-version-externally-managed \
 	      --record="installed.txt"

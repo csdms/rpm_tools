@@ -40,7 +40,7 @@ universities.
 %configure --disable-doc \
 	   --libdir=%{lib32dir} \
 	   --with-cca-babel=%{_prefix} \
-	   --with-babel-libtool=%{_prefix}/bin/babel-libtool \
+	   --with-babel-libtool=%{_bindir}/babel-libtool \
 	   --without-mpi \
 	   --with-boost=/usr/include
 make # deparallelize

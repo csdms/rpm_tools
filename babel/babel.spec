@@ -38,7 +38,7 @@ interoperability.
 	   --with-F90-vendor=GNU \
 	   --with-libparsifal=local \
 	   --disable-java \
-	   --enable-python=$CSDMS_PYTHON \
+	   --enable-python=%{_bindir}/python \
 	   --libdir=%{lib32dir}
 make %{?_smp_mflags}
 

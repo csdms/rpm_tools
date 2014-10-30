@@ -28,12 +28,12 @@ Shapely, PyYAML and netCDF4.
 
 # Build pip.
 %build
-$CSDMS_PYTHON setup.py build
+%{_bindir}/python setup.py build
 
 # Install pip, then use it to install the other packages.
 %install
 rm -rf %{buildroot}
-$CSDMS_PYTHON setup.py install -O1 --skip-build --root %{buildroot}
+%{_bindir}/python setup.py install -O1 --skip-build --root %{buildroot}
 export HDF5_DIR=%{_prefix}
 export NETCDF4_DIR=%{_prefix}
 export PYTHONPATH=%{buildroot}%{lib32dir}/python2.7/site-packages
