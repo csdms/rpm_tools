@@ -22,10 +22,11 @@ Install them with:
 $ sudo yum groupinstall "development tools"
 $ sudo yum install cmake git rpmdevtools
 ```
+Each tool will also have its own set of dependencies.
 
 ## Preparation
 
-Download and install the `packagebuilder` Python package from the
+Download and install (with Python >= 2.7) the `packagebuilder` package from the
 [csdms/packagebuilder](https://github.com/csdms/packagebuilder)
 repository:
 ```bash
@@ -34,14 +35,14 @@ $ cd packagebuilder
 $ sudo python setup.py install
 ```
 This installs the script `build_rpm`,
-which is used to build the RPMs for a tool.
+which is used to build the binary and source RPMs for a tool.
 The standard `rpmbuild` tool can also be used,
 but `build_rpm` handles much of the busy work
 to make the build process easier.
 
 To separate CSDMS software from other programs,
 the tools in this repository are designed to be installed 
-in the directory **/usr/local/csdms**,
+into the directory **/usr/local/csdms**,
 although this is optional.
 Set the environment variable `CSDMS_DIR`
 to the installation path on your machine:
@@ -54,7 +55,6 @@ The `QA_RPATHS` environment variable may also need to be set:
 ```bash
 $ export QA_RPATHS=19
 ```
-for building RPMs.
 
 ## Building and installing the CSDMS tools
 
