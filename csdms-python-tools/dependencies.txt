@@ -2,3 +2,5 @@
 csdms-python
 csdms-netcdf
 geos-devel
+lapack-devel
+blas-devel
