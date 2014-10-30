@@ -1,2 +1,3 @@
 # Packages required to build csdms-python
 gcc-c++
+openssl-devel
