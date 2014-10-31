@@ -3,12 +3,13 @@
 
 Name:		cca-spec-babel
 Version:	0.8.6
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	CCA Specification Babel bindings
 Group:		Applications/Engineering
 License:	Other
 URL:		http://www.cca-forum.org
 Source0:	http://www.cca-forum.org/download/cca-tools/cca-tools-latest/cca-spec-babel-0.8.6.tar.gz
+Patch0:		%{name}-tab-in-Makefile.babel.patch
 BuildRoot:	%{_topdir}/BUILDROOT/%{name}-%{version}-%{release}
 Prefix:         %{_prefix}
 
@@ -21,6 +22,7 @@ CCA Specification Babel bindings.
 
 %prep
 %setup -q
+%patch0
 
 # Following babel, allow cca-spec-babel to install in %{lib32dir} for 
 # dependent packages. Python 2.7, required for building the CSDMS software 
@@ -52,6 +54,9 @@ rm -rf %{buildroot}
 %{lib32dir}/
 
 %changelog
+* Fri Oct 31 2014 Mark Piper <mpiper@siwenna.colorado.edu> - 0.8.6-3
+- Add patch for missing tab in Makefile.babel
+
 * Wed Oct  8 2014 Mark Piper <mpiper@siwenna.colorado.edu> - 0.8.6-2
 - Remove Python flags from configure; get them from babel.
 

@@ -1,0 +1,11 @@
+--- Makefile.babel.in.orig	2014-10-31 14:09:09.638379634 -0600
++++ Makefile.babel.in	2014-10-31 14:09:31.514089561 -0600
+@@ -98,7 +98,7 @@
+ # installation
+ # we now just duplicate the library installation from the same objects.
+ static dynamic $(LLIB): ${LOBJS}
+-        $(HIDELIBTOOL)if test "$(ENABLE_CONTRIB)" = "1"; then \
++	$(HIDELIBTOOL)if test "$(ENABLE_CONTRIB)" = "1"; then \
+ 	  $(LIBTOOL) --mode=link --tag=CXX $(QUIET_LIBTOOL) $(LDSO) $(LIBTOOL_LINKFLAGS) -rpath $(DESTDIR)$(libdir) -o $(CCASPEC_LIBTOOL_LIB) $(BABL_INCLUDE) ${LOBJS} $(SIDLLIB); \
+ 	  $(LIBTOOL) --mode=link --tag=CXX $(QUIET_LIBTOOL) $(LDSO) $(LIBTOOL_LINKFLAGS) -rpath $(DESTDIR)$(pkglibdir) -o libcca.la $(BABL_INCLUDE) ${LOBJS} $(SIDLLIB); \
+ 	fi
