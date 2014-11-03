@@ -3,7 +3,7 @@
 
 Name:		ccaffeine
 Version:	0.8.8
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A Common Component Architecture framework for parallel computing
 Group:		Applications/Engineering
 License:	Other
@@ -35,14 +35,15 @@ universities.
 %patch0
 
 # Following babel, allow ccaffeine to install in %{lib32dir}.
-# The install location of cca-spec-babel should be /usr/local/csdms.
+# The install location of cca-spec-babel and the Boost libraries
+# should be /usr/local/csdms.
 %build
 %configure --disable-doc \
 	   --libdir=%{lib32dir} \
 	   --with-cca-babel=%{_prefix} \
 	   --with-babel-libtool=%{_bindir}/babel-libtool \
 	   --without-mpi \
-	   --with-boost=/usr/include
+	   --with-boost=%{_includedir}
 make # deparallelize
 
 %install
@@ -66,5 +67,8 @@ rm -rf %{buildroot}
 %{lib32dir}/
 
 %changelog
+* Mon Nov  3 2014 Mark Piper <mark.piper@colorado.edu> - 0.8.8-2
+- Provide headers for Boost libraries as a CSDMS package
+
 * Thu Oct 2 2014 Mark Piper <mark.piper@colorado.edu>
 - Initial build
