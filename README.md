@@ -55,6 +55,7 @@ The `QA_RPATHS` environment variable may also need to be set:
 ```bash
 $ export QA_RPATHS=19
 ```
+to handle the custom CSDMS install location.
 
 ## Building and installing the CSDMS tools
 
@@ -73,7 +74,8 @@ Build and install them in this order:
 1. `csdms-python-tools` (requires csdms-python, csdms-netcdf)
 1. `babel` (requires csdms-python, csdms-python-tools)
 1. `cca-spec-babel` (requires babel)
-1. `ccaffeine` (requires babel, cca-spec-babel)
+1. `csdms-boost-headers`
+1. `ccaffeine` (requires babel, cca-spec-babel, csdms-boost-headers)
 1. `bocca` (requires babel, cca-spec-babel, ccaffeine)
 1. `boccatools` (requires babel, bocca, csdms-python)
 1. `esmf` (requires csdms-netcdf, csdmd-python, csdms-python-tools)
