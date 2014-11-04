@@ -1,5 +1,5 @@
 # Packages required to build cmi
-cmake >= 2.8.9
+cmake >= 2.8
 pkgconfig
 glib
 csdms-python
