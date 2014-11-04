@@ -26,7 +26,7 @@ The Component Modeling Interface (CMI) wraps any model that provides a
 Basic Model Interface (BMI) to create a CSDMS plug-and-play component.
 
 %prep
-%setup -q -n %{name}
+%setup -q
 
 %build
 export PATH=%{_bindir}:$PATH
@@ -60,7 +60,7 @@ make
 rm -rf %{buildroot}
 cd csdms
 make DESTDIR=%{buildroot} install
-cd %{_builddir}/%{name}
+cd %{_builddir}/%{name}-%{version}
 install -d -m755 %{buildroot}%{docdir}/%{name}-%{version}
 install -m664 INSTALL.md LICENSE README.md \
 	%{buildroot}%{docdir}/%{name}-%{version}/
