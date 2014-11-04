@@ -77,8 +77,8 @@ export ESMF_NETCDF_LIBPATH=%{lib32dir}
 # sudo yum install -y csdms-python csdms-hdf5 csdms-netcdf csdms-python-tools
 sudo -E make install
 cd $ESMF_DIR/src/addon/ESMPy
-sudo -E $CSDMS_PYTHON setup.py build --ESMFMKFILE=%{lib32dir}/libO/Linux.gfortran.64.mpiuni.default/esmf.mk install
-# sudo -E $CSDMS_PYTHON setup.py test_all
+sudo -E %{_bindir}/python setup.py build --ESMFMKFILE=%{lib32dir}/libO/Linux.gfortran.64.mpiuni.default/esmf.mk install
+# sudo -E %{_bindir}/python setup.py test_all
 sudo yum erase -y csdms-python csdms-hdf5
 mkdir -p %{buildroot}%{_prefix}
 cp -R %{_prefix}/* %{buildroot}%{_prefix}

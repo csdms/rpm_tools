@@ -29,8 +29,8 @@ Basic Model Interface (BMI) to create a CSDMS plug-and-play component.
 %setup -q -n %{name}
 
 %build
-export PATH=$CSDMS_DIR/bin:$PATH
-export PKG_CONFIG_PATH=$CSDMS_DIR/lib/pkgconfig
+export PATH=%{_bindir}:$PATH
+export PKG_CONFIG_PATH=%{lib32dir}/pkgconfig
 export AVULSION_CPPFLAGS=$(pkg-config --cflags avulsion)
 export AVULSION_LDFLAGS=$(pkg-config --libs avulsion)
 export CEM_CPPFLAGS=$(pkg-config --cflags deltas)
@@ -47,7 +47,7 @@ export SEDFLUX3D_CPPFLAGS=$(pkg-config --cflags sedflux3d)
 export SEDFLUX3D_LDFLAGS=$(pkg-config --libs sedflux3d)
 export WAVES_CPPFLAGS=$(pkg-config --cflags waves)
 export WAVES_LDFLAGS=$(pkg-config --libs waves)
-export PYTHONPATH=$($CSDMS_PYTHON -c "import site; print site.getsitepackages()[0]"):$PYTHONPATH
+export PYTHONPATH=$(%{_bindir}/python -c "import site; print site.getsitepackages()[0]"):$PYTHONPATH
 %cmake .
 make just_hydrotrend
 cd csdms
